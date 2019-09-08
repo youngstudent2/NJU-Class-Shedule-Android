@@ -73,32 +73,7 @@ public class HttpUtils {
     public void login(final String schoolUrl, final String xh, String passwd, String catpcha,
                       final String courseTime, final String term,
                       final HttpCallback<String> callback) {
-        OkHttpUtils.post().url(schoolUrl + Url.LoginUrl)
-                .addParams("userName", xh)
-                .addParams("password", passwd)
-                .addParams("ValidateCode", catpcha)
-                .build().execute(new StringCallback() {
-            @Override
-            public void onError(Call call, Exception e, int id) {
-                e.printStackTrace();
-                callback.onFail(ACCESS_ERR);
-            }
-
-            @Override
-            public void onResponse(String response, int id) {
-                LogUtil.e(this, response);
-
-                if (response.contains(app.mContext.getString(R.string.captcha_err))) {
-                    callback.onFail(app.mContext.getString(R.string.captcha_err));
-                } else if (response.contains(app.mContext.getString(R.string.pwd_err))) {
-                    callback.onFail(app.mContext.getString(R.string.pwd_err));
-                } else if (response.contains(app.mContext.getString(R.string.timeout_err))) {
-                    callback.onFail(app.mContext.getString(R.string.timeout_err));
-                } else {
-                    toImpt(xh, schoolUrl, callback);
-                }
-            }
-        });
+        
     }
 
     /**
